@@ -21,7 +21,7 @@ jobs:
           pip install -r requirements-dev.txt
       - name: Lint (ruff)
         run: |
-          npx ruff . || python -m ruff .
+          npx ruff check . || python -m ruff check .
       - name: Typecheck (mypy)
         run: |
           mypy src || true
