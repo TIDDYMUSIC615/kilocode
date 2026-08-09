@@ -48,6 +48,8 @@ class Master:
             pass
 
         # start metrics HTTP endpoint for Prometheus scraping
+        from arsenal.config import settings
+
         if web is None:
             self.logger.warning("aiohttp not available; metrics endpoint disabled")
         else:
@@ -61,9 +63,9 @@ class Master:
                 app.router.add_get("/metrics", metrics_handler)
                 self._runner = web.AppRunner(app)
                 await self._runner.setup()
-                site = web.TCPSite(self._runner, "0.0.0.0", 8000)
+                site = web.TCPSite(self._runner, "0.0.0.0", settings.prometheus_port)
                 await site.start()
-                self.logger.info("metrics endpoint listening on 0.0.0.0:8000")
+                self.logger.info("metrics endpoint listening on 0.0.0.0:%s", settings.prometheus_port)
             except Exception as exc:
                 self.logger.exception("failed to start metrics endpoint: %s", exc)
 

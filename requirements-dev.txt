@@ -8,3 +8,4 @@ websockets==11.0.3
 aiohttp>=3.9.0
 structlog==22.3.0
 prometheus-client==0.16.0
+python-dotenv>=1.0.0
